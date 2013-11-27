@@ -4,7 +4,9 @@ from django.shortcuts import render
 from main.models import Article
 from main.forms import RankForm
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def rank(request):
     if request.method == "POST":
         form = RankForm(request.POST)
