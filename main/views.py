@@ -7,7 +7,8 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext
 from django.forms.models import model_to_dict
-from django.utils import simplejson
+from django.core import serializers
+from django.shortcuts import render_to_response
 
 @csrf_exempt
 def rank(request):
@@ -40,6 +41,8 @@ def rank(request):
         else:
             return HttpResponse("ERROR NOT VALID")
     else:
+        #~ form = RankForm()
+        #~ return render_to_response("input.html", {'form':form}, context_instance=RequestContext(request))
         return HttpResponse("ERROR METHOD")
 
 @csrf_exempt
@@ -49,10 +52,10 @@ def best(request):
             cant = request.POST.get('cant')
         else:
             cant = 5
-        art = Article.objects.all().order_by('total_count')[:cant]
-        data = model_to_dict(art, fields=['name', 'total_count'], exclude=['facebook_count', 'twitter_count', 'twitter_rate', 'facebook_rate', 'smw_id'])
-        json = simplejson.dumps(data)
-        return HttpResponse(json, mimetype='application/json')    
+        data = serializers.serialize('json', Article.objects.all().order_by('total_count')[:cant],
+            fields=('name', 'total_count', 'facebook_count', 'twitter_count'))
+        print data
+        return HttpResponse(data, mimetype='application/json')    
     else:
         return HttpResponse("ERROR METHOD")
 
@@ -63,10 +66,9 @@ def worst(request):
             cant = request.POST.get('cant')
         else:
             cant = 5
-        art = Article.objects.all().order_by('-total_count')[:cant]
-        data = model_to_dict(art, fields=['name', 'total_count'], exclude=['facebook_count', 'twitter_count', 'twitter_rate', 'facebook_rate', 'smw_id'])
-        json = simplejson.dumps(data)
-        return HttpResponse(json, mimetype='application/json')    
+        data = serializers.serialize('json', Article.objects.all().order_by('-total_count')[:cant],
+            fields=('name', 'total_count', 'facebook_count', 'twitter_count'))
+        return HttpResponse(data, mimetype='application/json')    
     else:
         return HttpResponse("ERROR METHOD")    
     
