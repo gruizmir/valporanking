@@ -12,6 +12,7 @@ from django.template import RequestContext
 def rank(request):
     if request.method == "POST":
         form = RankForm(request.POST)
+        print request.POST
         if form.is_valid():
             fb_shared = form.cleaned_data['facebook_share']
             tw_shared = form.cleaned_data['twitter_share']
@@ -22,6 +23,7 @@ def rank(request):
                 art = Article()
                 art.name = name
                 art.save()
+                
             if fb_shared:
                 art.facebook_count = art.facebook_count + 1
                 art.facebook_rate = (art.facebook_rate + form.cleaned_data['facebook_rate'])/art.facebook_count
@@ -31,11 +33,11 @@ def rank(request):
                 art.twitter_rate = (art.twitter_rate + form.cleaned_data['twitter_rate'])/art.twitter_count
                 art.save()
             else:
-                return HttpResponse("ERROR")
+                return HttpResponse("ERROR NOT SHARED")
             return HttpResponse("OK")
         else:
-            return HttpResponse("ERROR")
+            return HttpResponse("ERROR NOT VALID")
     else:
         #~ rForm = RankForm()
         #~ return render_to_response("input.html", {'form':rForm}, context_instance=RequestContext(request))
-        return HttpResponse("ERROR")
+        return HttpResponse("ERROR METHOD")
