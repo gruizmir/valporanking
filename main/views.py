@@ -57,13 +57,13 @@ def best(request):
         return HttpResponse("ERROR METHOD")
 
 
-def hipster(request):
+def worst(request):
     if request.method == "POST":
         if 'cant' in request.POST:
             cant = request.POST.get('cant')
         else:
             cant = 5
-        art = Article.objects.all().order_by('total_count')[:cant]
+        art = Article.objects.all().order_by('-total_count')[:cant]
         data = model_to_dict(art, fields=['name', 'total_count'], exclude=['facebook_count', 'twitter_count', 'twitter_rate', 'facebook_rate', 'smw_id'])
         json = simplejson.dumps(data)
         return HttpResponse(json, mimetype='application/json')    
