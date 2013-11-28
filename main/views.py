@@ -42,7 +42,7 @@ def rank(request):
     else:
         return HttpResponse("ERROR METHOD")
 
-
+@csrf_exempt
 def best(request):
     if request.method == "POST":
         if 'cant' in request.POST:
@@ -56,7 +56,7 @@ def best(request):
     else:
         return HttpResponse("ERROR METHOD")
 
-
+@csrf_exempt
 def worst(request):
     if request.method == "POST":
         if 'cant' in request.POST:
