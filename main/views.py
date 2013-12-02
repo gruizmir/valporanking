@@ -54,8 +54,7 @@ def best(request):
             cant = 5
         data = serializers.serialize('json', Article.objects.all().order_by('total_count')[:cant],
             fields=('name', 'total_count', 'facebook_count', 'twitter_count'))
-        print data
-        return HttpResponse(data, mimetype='application/json')    
+        return HttpResponse(data, mimetype='application/json')
     else:
         return HttpResponse("ERROR METHOD")
 
@@ -120,7 +119,7 @@ def getImages(request):
         name = request.GET['elem']
         iList = Imagen.objects.filter(article_name=name).order_by('-votes').values('img')
         if iList.exists():
-            return HttpResponse("EXIST")
+            return HttpResponse(iList, mimetype='application/json')
         else:
             return HttpResponse("ERROR NOT EXIST")
     else:
