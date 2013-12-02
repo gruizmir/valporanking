@@ -117,10 +117,9 @@ def voteImage(request):
 def getImages(request):
     if 'elem' in request.GET:
         name = request.GET['elem']
-        iList = Imagen.objects.filter(article_name=name).order_by('-votes').values('img')
-        if iList.exists():
-            return HttpResponse(iList, mimetype='application/json')
-        else:
-            return HttpResponse("ERROR NOT EXIST")
+        iList = serializers.serialize('json', Imagen.objects.filter(article_name=name).order_by('-votes'),
+            fields=('img'))
+        print iList
+        return HttpResponse(iList, mimetype='application/json')
     else:
         return HttpResponse("ERROR NOT EXIST")
