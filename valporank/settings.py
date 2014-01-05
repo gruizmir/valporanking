@@ -107,4 +107,4 @@ INSTALLED_APPS = (
     'main',
 )
 
-MAX_IMG_SIZE = 200
+MAX_IMG_SIZE = 400
