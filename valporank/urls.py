@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url(r'^voteimage/', 'main.views.voteImage'),
     url(r'^getimages', 'main.views.getImages'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^extra', 'main.views.extra'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

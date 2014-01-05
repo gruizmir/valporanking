@@ -137,3 +137,10 @@ def resize(filename):
     thumb = img.resize((nWidth, nHeight), Image.ANTIALIAS)
     justName = filename.rsplit("/",1)[1]
     thumb.save(filename.replace(justName, "thumb_" + justName))
+
+
+def extra(request):
+    iList = Imagen.objects.all()
+    for i in iList:
+        resize(i.img.path)
+    return HttpResponse("OK")
