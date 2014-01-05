@@ -139,8 +139,8 @@ def resize(filename):
     thumb.save(filename.replace(justName, "thumb_" + justName))
 
 
-def extra(request):
-    iList = Imagen.objects.all()
-    for i in iList:
-        resize(i.img.path)
-    return HttpResponse("OK")
+#def extra(request):
+    #iList = Imagen.objects.all()
+    #for i in iList:
+        #resize(i.img.path)
+    #return HttpResponse("OK")
