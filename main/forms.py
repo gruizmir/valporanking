@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.forms import ModelForm, Form, BooleanField, CharField, IntegerField
-from django.db import models
 from main.models import *
 
 
